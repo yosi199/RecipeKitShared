@@ -11,7 +11,7 @@ public struct CreateRecipeDTO: Codable, Sendable {
     public let servings: Int
     public let tags: [String]
     public let image: String?
-    public let isFavorite: Bool
+    public let isFavorite: Bool?
     
     public init(
         name: String,
@@ -23,7 +23,7 @@ public struct CreateRecipeDTO: Codable, Sendable {
         servings: Int = 1,
         tags: [String] = [],
         image: String? = nil,
-        isFavorite: Bool = false
+        isFavorite: Bool? = nil
     ) {
         self.name = name
         self.description = description
