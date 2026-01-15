@@ -14,7 +14,8 @@ extension String {
     /// Check if string is a valid email format (basic validation)
     public var isValidEmail: Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let predicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-        return predicate.evaluate(with: self)
+        guard let regex = try? NSRegularExpression(pattern: emailRegex, options: []) else { return false }
+        let range = NSRange(location: 0, length: self.utf16.count)
+        return regex.firstMatch(in: self, options: [], range: range) != nil
     }
 }
