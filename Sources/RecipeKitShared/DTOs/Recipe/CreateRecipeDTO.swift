@@ -42,11 +42,25 @@ public struct CreateRecipeDTO: Codable, Sendable {
         case description
         case ingredients
         case instructions
-        case prepTime = "prepTime"
-        case cookTime = "cookTime"
+        case prepTime
+        case cookTime
         case servings
         case tags
         case image
-        case isFavorite = "isFavorite"
+        case isFavorite
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decode(String.self, forKey: .name)
+        description = try container.decodeIfPresent(String.self, forKey: .description)
+        ingredients = try container.decode([String].self, forKey: .ingredients)
+        instructions = try container.decode([String].self, forKey: .instructions)
+        prepTime = try container.decode(Int.self, forKey: .prepTime)
+        cookTime = try container.decode(Int.self, forKey: .cookTime)
+        servings = try container.decode(Int.self, forKey: .servings)
+        tags = try container.decode([String].self, forKey: .tags)
+        image = try container.decodeIfPresent(String.self, forKey: .image)
+        isFavorite = try container.decodeIfPresent(Bool.self, forKey: .isFavorite)
     }
 }

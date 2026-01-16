@@ -43,14 +43,28 @@ public struct UpdateRecipeDTO: Codable, Sendable {
         case description
         case ingredients
         case instructions
-        case prepTime = "prepTime"
-        case cookTime = "cookTime"
+        case prepTime
+        case cookTime
         case servings
         case tags
         case image
-        case isFavorite = "isFavorite"
+        case isFavorite
     }
-    
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
+        description = try container.decodeIfPresent(String.self, forKey: .description)
+        ingredients = try container.decodeIfPresent([String].self, forKey: .ingredients)
+        instructions = try container.decodeIfPresent([String].self, forKey: .instructions)
+        prepTime = try container.decodeIfPresent(Int.self, forKey: .prepTime)
+        cookTime = try container.decodeIfPresent(Int.self, forKey: .cookTime)
+        servings = try container.decodeIfPresent(Int.self, forKey: .servings)
+        tags = try container.decodeIfPresent([String].self, forKey: .tags)
+        image = try container.decodeIfPresent(String.self, forKey: .image)
+        isFavorite = try container.decodeIfPresent(Bool.self, forKey: .isFavorite)
+    }
+
     /// Check if DTO has any fields to update
     public var hasUpdates: Bool {
         name != nil || description != nil || ingredients != nil ||
